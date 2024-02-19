@@ -9,4 +9,19 @@ const getAllUsers = async (_req, res) => {
   }
 };
 
-module.exports = { getAllUsers };
+// get all specific users listings
+const getUsersListings = async (req, res) => {
+  try {
+    const listings = await knex("user")
+      .join("listings", "listings.user_id", "user.id")
+      .where({ user_id: req.params.id });
+
+    res.json(listings);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to retrieve posts for user with ID ${req.params.id}: ${error}`,
+    });
+  }
+};
+
+module.exports = { getAllUsers, getUsersListings };
