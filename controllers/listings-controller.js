@@ -1,7 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 
+// homepage
 const getAllListings = async (_req, res) => {
-  console.log("hi");
   try {
     const data = await knex("listings");
     res.status(200).json(data);
@@ -10,6 +10,7 @@ const getAllListings = async (_req, res) => {
   }
 };
 
+// homepage - clicking single listing
 const findSingleListing = async (req, res) => {
   try {
     // find id in listings

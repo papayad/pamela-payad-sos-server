@@ -9,7 +9,7 @@ const getAllUsers = async (_req, res) => {
   }
 };
 
-// get all specific users listings
+// get all specific users listings (my listings page)
 const getUsersListings = async (req, res) => {
   try {
     const listings = await knex("user")

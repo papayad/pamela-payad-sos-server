@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 
 const PORT = process.env.PORT || 8081;
+app.use(cors());
 
 const userRoutes = require("./routes/user-routes");
 const listingsRoutes = require("./routes/listings-routes");
