@@ -18,6 +18,7 @@ exports.up = function (knex) {
       table.string("series").notNullable();
       table.string("name").notNullable();
       table.string("price").notNullable();
+      table.string("contact").notNullable();
       table
         .integer("user_id")
         .unsigned()
