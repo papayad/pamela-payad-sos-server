@@ -79,4 +79,28 @@ const editListing = async (req, res) => {
   }
 };
 
-module.exports = { getAllListings, findSingleListing, createListing, editListing };
+const deleteListing = async (req, res) => {
+  try {
+    const rowsdeleted = await knex("listings").where({ id: req.params.id }).delete();
+
+    if (rowsdeleted === 0) {
+      return res
+        .status(404)
+        .json({ message: `Listing with ID ${req.params.id} not found` });
+    }
+
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to delete listing`,
+    });
+  }
+};
+
+module.exports = {
+  getAllListings,
+  findSingleListing,
+  createListing,
+  editListing,
+  deleteListing,
+};
