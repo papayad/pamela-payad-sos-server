@@ -33,4 +33,28 @@ const findSingleListing = async (req, res) => {
   }
 };
 
-module.exports = { getAllListings, findSingleListing };
+const createListing = async (req, res) => {
+  if (
+    !req.body.series ||
+    !req.body.name ||
+    !req.body.price ||
+    !req.body.contact ||
+    !req.body.user_id
+  ) {
+    return res.status(400).json({
+      message: "Please provide name and email for the user in the request",
+    });
+  }
+
+  try {
+    const [newListing] = await knex("listings").insert(req.body);
+    const createdListing = await knex("listings").where({ id: newListing }).first();
+    res.status(200).json(createdListing);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to create listing`,
+    });
+  }
+};
+
+module.exports = { getAllListings, findSingleListing, createListing };
