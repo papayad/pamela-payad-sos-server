@@ -3,8 +3,9 @@ const router = require("express").Router();
 const listingsController = require("../controllers/listings-controller");
 
 router.route("/").get(listingsController.getAllListings);
-router.route("/:id").get(listingsController.findSingleListing);
 router.route("/").post(listingsController.createListing);
+router.route("/:id").get(listingsController.findSingleListing);
 router.route("/:id").patch(listingsController.editListing);
+router.route("/:id").delete(listingsController.deleteListing);
 
 module.exports = router;
