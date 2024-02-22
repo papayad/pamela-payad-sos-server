@@ -5,5 +5,6 @@ const listingsController = require("../controllers/listings-controller");
 router.route("/").get(listingsController.getAllListings);
 router.route("/:id").get(listingsController.findSingleListing);
 router.route("/").post(listingsController.createListing);
+router.route("/:id").patch(listingsController.editListing);
 
 module.exports = router;
