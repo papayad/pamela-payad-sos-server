@@ -57,4 +57,26 @@ const createListing = async (req, res) => {
   }
 };
 
-module.exports = { getAllListings, findSingleListing, createListing };
+const editListing = async (req, res) => {
+  try {
+    const rowsUpdated = await knex("listings")
+      .where({ id: req.params.id })
+      .update(req.body);
+
+    if (rowsUpdated === 0) {
+      return res
+        .status(404)
+        .json({ message: `Listing with ID ${req.params.id} not found` });
+    }
+
+    const updatedListing = await knex("listings").where({ id: req.params.id });
+
+    res.json(updatedListing[0]);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to update listing`,
+    });
+  }
+};
+
+module.exports = { getAllListings, findSingleListing, createListing, editListing };
