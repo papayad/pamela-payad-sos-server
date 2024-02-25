@@ -1,6 +1,5 @@
 const knex = require("knex")(require("../knexfile"));
 
-// homepage
 const getAllListings = async (_req, res) => {
   try {
     const data = await knex("listings");
@@ -10,7 +9,6 @@ const getAllListings = async (_req, res) => {
   }
 };
 
-// homepage - clicking single listing
 const findSingleListing = async (req, res) => {
   try {
     // find id in listings
@@ -34,6 +32,7 @@ const findSingleListing = async (req, res) => {
 };
 
 const createListing = async (req, res) => {
+  // check if these values are provided
   if (
     !req.body.series ||
     !req.body.name ||
@@ -42,11 +41,12 @@ const createListing = async (req, res) => {
     !req.body.user_id
   ) {
     return res.status(400).json({
-      message: "Please provide name and email for the user in the request",
+      message: "Please provide all values for the listings in the request",
     });
   }
 
   try {
+    // insert into the table
     const [newListing] = await knex("listings").insert(req.body);
     const createdListing = await knex("listings").where({ id: newListing }).first();
     res.status(200).json(createdListing);
@@ -59,10 +59,12 @@ const createListing = async (req, res) => {
 
 const editListing = async (req, res) => {
   try {
+    // update any changes made
     const rowsUpdated = await knex("listings")
       .where({ id: req.params.id })
       .update(req.body);
 
+    // check if nothing was updated
     if (rowsUpdated === 0) {
       return res
         .status(404)
